@@ -2,6 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: serviceregistry
   labels:
     app: serviceregistry
 spec:
@@ -22,11 +23,11 @@ metadata:
   labels:
     app: serviceregistry
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: serviceregistry
   template:
-    replicas: 1
     metadata:
       labels:
         app: serviceregistry
