@@ -6,4 +6,11 @@ steps:
     args: ["build","-t","asia-south1-docker.pkg.dev/kubedemo-412505/looksyou-docker/serviceregistry:v1","--build-arg=JAR_FILE=target/serviceregistry-0.0.1-SNAPSHOT.jar","."]
   - name: gcr.io/cloud-builders/docker
     args: ["push","asia-south1-docker.pkg.dev/kubedemo-412505/looksyou-docker/serviceregistry:v1"]
+  - name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - --filename=/workspace/deployment.yaml
+      - --image=asia-south1-docker.pkg.dev/kubedemo-412505/looksyou-docker/serviceregistry:v1
+      - --location=asia-south1
+      - --cluster=my-cluster
 images: ["asia-south1-docker.pkg.dev/kubedemo-412505/looksyou-docker/serviceregistry:v1"]

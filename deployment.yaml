@@ -1,0 +1,38 @@
+#Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: serviceregistry
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8761
+      targetPort: 8761
+  selector:
+    app: serviceregistry
+
+---
+
+#Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviceregistry
+  labels:
+    app: serviceregistry
+spec:
+  selector:
+    matchLabels:
+      app: serviceregistry
+  template:
+    replicas: 1
+    metadata:
+      labels:
+        app: serviceregistry
+    spec:
+      containers:
+        - name: serviceregistry
+          image: asia-south1-docker.pkg.dev/kubedemo-412505/looksyou-docker/serviceregistry:v1
+          ports:
+            - containerPort: 8761
